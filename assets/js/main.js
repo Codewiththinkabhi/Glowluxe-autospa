@@ -18,3 +18,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const loadPartial = (elementId, filePath) => {
+    const targetEl = document.getElementById(elementId);
+    if (targetEl) {
+      fetch(filePath)
+        .then(response => {
+          if (!response.ok) throw new Error("HTTP error " + response.status);
+          return response.text();
+        })
+        .then(html => { targetEl.innerHTML = html; })
+        .catch(err => console.error("Failed to load " + filePath, err));
+    }
+  };
+  loadPartial("site-header", "header.html");
+  loadPartial("site-footer", "footer.html");
+});
+
